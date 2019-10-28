@@ -11,6 +11,8 @@ namespace CS_Part2_Lesson1
         static void Main(string[] args)
         {
             Console.WriteLine("Achtung und alarm!!!");
+            Console.WriteLine("Achtung und alarm!!!");
+
         }
     }
 }
