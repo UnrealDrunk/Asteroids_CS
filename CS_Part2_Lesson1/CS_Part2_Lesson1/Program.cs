@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
+
+
+// Сздаём шаблон приложения, где подключаем модули
 
 namespace CS_Part2_Lesson1
 {
@@ -10,9 +10,14 @@ namespace CS_Part2_Lesson1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Achtung und alarm!!!");
-            Console.WriteLine("Achtung und alarm!!!");
-
+            Form form = new Form();
+            form.Width = 800;
+            form.Height = 600;
+            Game.Init(form);
+            form.Show();
+            Game.Draw();
+            Application.Run(form);
+            Console.ReadKey();
         }
     }
 }
