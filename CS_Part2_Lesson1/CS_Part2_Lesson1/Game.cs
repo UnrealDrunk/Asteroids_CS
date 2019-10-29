@@ -40,28 +40,31 @@ namespace CS_Part2_Lesson1
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
 
             Load();
+
+            Timer timer = new Timer { Interval = 100 };
+            timer.Start();
+            timer.Tick += Timer_Tick;
+
+
         }
 
         public static void Draw()
         {
             // проверяем вывод графики
 
-            Buffer.Graphics.Clear(Color.Black);
+            //Buffer.Graphics.Clear(Color.Black);
 
-            Buffer.Graphics.DrawRectangle(Pens.White, new Rectangle(100, 100, 200, 200));
+            //Buffer.Graphics.DrawRectangle(Pens.White, new Rectangle(100, 100, 200, 200));
 
-            Buffer.Graphics.FillEllipse(Brushes.Wheat, new Rectangle(100, 100, 200, 200));
+            //Buffer.Graphics.FillEllipse(Brushes.Wheat, new Rectangle(100, 100, 200, 200));
 
-            Buffer.Render();
+            //Buffer.Render();
 
             Buffer.Graphics.Clear(Color.Black);
             foreach (BaseObject obj in _objs)
                 obj.Draw();
             Buffer.Render();
 
-            Timer timer = new Timer { Interval = 100 };
-            timer.Start();
-            timer.Tick += Timer_Tick;
 
 
 
