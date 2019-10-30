@@ -14,6 +14,8 @@ namespace CS_Part2_Lesson1
         public static int Width { get; set; }
         public static int Height { get; set; }
 
+        
+
         static Game()
         {
 
@@ -61,6 +63,7 @@ namespace CS_Part2_Lesson1
             //Buffer.Render();
 
             Buffer.Graphics.Clear(Color.Black);
+          
             foreach (BaseObject obj in _objs)
                 obj.Draw();
             Buffer.Render();
@@ -91,13 +94,17 @@ namespace CS_Part2_Lesson1
 
         public static void Load()
         {
+            
             _objs = new BaseObject[30];
 
+            Asteroids.Image = Image.FromFile("Assets//asteroid2.png");
             for (int i = 0; i < _objs.Length/2; i++)
-                _objs[i] = new BaseObject(new Point(600, i * 20), new Point(- i, - i), new Size(10, 10));
+                _objs[i] = new Asteroids(new Point(600, i * 20), new Point(10- i, 10- i), new Size(20, 20));
 
+            Star.Image = Image.FromFile("Assets\\star5.png");
+            
             for (int i = _objs.Length / 2; i < _objs.Length; i++)
-                _objs[i] = new Star(new Point(600, i * 20), new Point(-i, 0), new Size(7, 7));
+                _objs[i] = new Star(new Point(700, i*20), new Point(10-i, 10-i), new Size(20, 20));
 
 
 
