@@ -16,12 +16,12 @@ namespace CS_Part2_Lesson1
             this.size = size;
         }
 
-        public void Draw()
+        public virtual void Draw()
         {
             Game.Buffer.Graphics.DrawEllipse(Pens.White, Pos.X, Pos.Y, size.Width, size.Height);
         }
 
-        public void Update()
+        public virtual void Update()
         {
             Pos.X = Pos.X + Dir.X;
             Pos.Y = Pos.Y + Dir.Y;
