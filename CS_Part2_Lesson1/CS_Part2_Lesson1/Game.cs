@@ -63,9 +63,10 @@ namespace CS_Part2_Lesson1
             //Buffer.Render();
 
             Buffer.Graphics.Clear(Color.Black);
+      
+            ObjectDraw();
           
-            foreach (BaseObject obj in _objs)
-                obj.Draw();
+          
             Buffer.Render();
 
 
@@ -84,28 +85,55 @@ namespace CS_Part2_Lesson1
 
         public static void Update()
         {
-            foreach (BaseObject obj in _objs)
+            foreach (BaseObject obj in _objsA)
                 obj.Update();
+            foreach (BaseObject obj in _objsB)
+                obj.Update();
+            foreach (BaseObject obj in _objsC)
+                obj.Update();
+
+        }
+
+        public static void ObjectDraw()
+        {
+            foreach (BaseObject obj in _objsA)
+                obj.Draw();
+            foreach (BaseObject obj in _objsB)
+                obj.Draw();
+            foreach (BaseObject obj in _objsC)
+                obj.Draw();
+
         }
 
 
 
-        public static BaseObject[] _objs;
+        public static BaseObject[] _objsA;
+        public static BaseObject[] _objsB;
+        public static BaseObject[] _objsC;
+
+
 
         public static void Load()
         {
             
-            _objs = new BaseObject[30];
+            _objsA = new BaseObject[30];
+            _objsB = new BaseObject[60];
+            _objsC = new BaseObject[4];
+
+            Random rand = new Random();
+            
 
             Asteroids.Image = Image.FromFile("Assets//asteroid2.png");
-            for (int i = 0; i < _objs.Length/2; i++)
-                _objs[i] = new Asteroids(new Point(600, i * 20), new Point(10- i, 10- i), new Size(20, 20));
+            for (int i = 0; i < _objsA.Length; i++)
+                _objsA[i] = new Asteroids(new Point(rand.Next(600), i * 20), new Point(10- i, 10- i), new Size(40, 40));
 
             Star.Image = Image.FromFile("Assets\\star5.png");
-            
-            for (int i = _objs.Length / 2; i < _objs.Length; i++)
-                _objs[i] = new Star(new Point(700, i*20), new Point(10-i, 10-i), new Size(20, 20));
+            for (int i = 0; i < _objsB.Length; i++)
+                _objsB[i] = new Star(new Point(rand.Next(780), rand.Next(590)), new Point(20-i, 5-i), new Size(20, 20));
 
+            Fighter.Image = Image.FromFile("Assets\\fighter.png");
+            for (int i = 0; i < _objsC.Length; i++)
+                _objsC[i] = new Fighter(new Point(rand.Next(700), rand.Next(550)), new Point(5 + i, 5 - i), new Size(100, 109));
 
 
         }
