@@ -33,6 +33,11 @@ namespace CS_Part2_Lesson1
         }
 
 
+        public override void GetStartPosition()
+        {
+      
+
+        }
 
 
     }

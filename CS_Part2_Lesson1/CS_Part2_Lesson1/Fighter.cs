@@ -13,6 +13,8 @@ namespace CS_Part2_Lesson1
 
         public int Power { get; set; }
 
+        Random rand = new Random();
+
         public Fighter(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
             Power = 1;
@@ -36,7 +38,12 @@ namespace CS_Part2_Lesson1
             if (Pos.Y > Game.Height) Dir.Y = -Dir.Y;
         }
 
+        public override void GetStartPosition()
+        {
+            Pos.X = Game.Width - 100;
+            Pos.Y = rand.Next(100, Game.Height - 100);
 
+        }
 
 
     }

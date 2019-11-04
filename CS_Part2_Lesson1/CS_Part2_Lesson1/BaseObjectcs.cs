@@ -27,9 +27,10 @@ namespace CS_Part2_Lesson1
 
 
         public abstract void Update();
-    
 
-      
+        public abstract void GetStartPosition();
+
+
 
     }
 }

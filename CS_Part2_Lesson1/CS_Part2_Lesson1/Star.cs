@@ -31,6 +31,11 @@ namespace CS_Part2_Lesson1
             if (Pos.X > Game.Width) Dir.X = -Dir.X;
         }
 
+        public override void GetStartPosition()
+        {
+            
+
+        }
 
 
     }

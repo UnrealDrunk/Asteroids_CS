@@ -36,7 +36,7 @@ namespace CS_Part2_Lesson1
                
         }
 
-        public void GetStartPosition()
+        public override void GetStartPosition()
         {
             Pos.X = 0;
            

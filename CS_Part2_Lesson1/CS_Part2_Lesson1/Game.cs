@@ -105,10 +105,10 @@ namespace CS_Part2_Lesson1
                 obj.Update();
             foreach (BaseObject obj in _objsB)
                 obj.Update();
-            foreach (BaseObject obj in _objsC)
+            for (int i = 0; i < _objsC.Length; i++)
             {
-                obj.Update();
-                if(!obj.Collision(missle))
+                _objsC[i].Update();
+                if(!_objsC[i].Collision(missle))
                 {
                     missle.Update();
                 }  
@@ -116,7 +116,7 @@ namespace CS_Part2_Lesson1
                 {
                     System.Media.SystemSounds.Hand.Play();
                     Console.WriteLine("Missle Hit!");
-
+                    _objsC[i].GetStartPosition();
                     missle.GetStartPosition();
                     missle.Update();
                 }
