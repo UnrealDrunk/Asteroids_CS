@@ -19,7 +19,7 @@ namespace CS_Part2_Lesson1
 
         public override void Draw()
         {
-            Game.Buffer.Graphics.DrawRectangle(Pens.OrangeRed, Pos.X, Pos.Y, size.Width, size.Height);
+            Game.Buffer.Graphics.DrawRectangle(Pens.LightBlue, Pos.X, Pos.Y, size.Width, size.Height);
         }
 
         public override void Update()
@@ -46,7 +46,7 @@ namespace CS_Part2_Lesson1
         private int ChangePosY()
         {
             int randomizer =0;
-            int step = 100;
+            int step = 150;
             int stepLimit = step++;
 
             if (Pos.Y > stepLimit && Pos.Y < Game.Height - stepLimit)

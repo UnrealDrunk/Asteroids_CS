@@ -10,6 +10,7 @@ namespace CS_Part2_Lesson1
     class Asteroids : BaseObject
     {
         public static Image Image { get; set; }
+        
 
         public Asteroids(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
@@ -20,7 +21,7 @@ namespace CS_Part2_Lesson1
         {
             
             Game.Buffer.Graphics.DrawImage(Image, Pos);
-
+           
 
         }
 

@@ -15,9 +15,9 @@ namespace CS_Part2_Lesson1
         public static int Width { get; set; }
         public static int Height { get; set; }
 
-        public static BaseObject[] _objsA;
-        public static BaseObject[] _objsB;
-        public static BaseObject[] _objsC;
+        public static BaseObject[] asteroids;
+        public static BaseObject[] stars;
+        public static BaseObject[] fighters;
         static Missle missle;
 
 
@@ -54,6 +54,7 @@ namespace CS_Part2_Lesson1
             if(GetType()==typeof(Game))
             {
                 Load();
+                PlaySoundtrack();
 
                 Timer timer = new Timer { Interval = 100 };
                 timer.Start();
@@ -101,22 +102,26 @@ namespace CS_Part2_Lesson1
 
         public static void Update()
         {
-            foreach (BaseObject obj in _objsA)
+           
+
+            foreach (BaseObject obj in asteroids)
                 obj.Update();
-            foreach (BaseObject obj in _objsB)
+            foreach (BaseObject obj in stars)
                 obj.Update();
-            for (int i = 0; i < _objsC.Length; i++)
+            for (int i = 0; i < fighters.Length; i++)
             {
-                _objsC[i].Update();
-                if(!_objsC[i].Collision(missle))
+                fighters[i].Update();
+                if(!fighters[i].Collision(missle))
                 {
+
                     missle.Update();
                 }  
                 else
                 {
                     System.Media.SystemSounds.Hand.Play();
                     Console.WriteLine("Missle Hit!");
-                    _objsC[i].GetStartPosition();
+                    
+                    fighters[i].GetStartPosition();
                     missle.GetStartPosition();
                     missle.Update();
                 }
@@ -130,11 +135,11 @@ namespace CS_Part2_Lesson1
 
         public static void ObjectDraw()
         {
-            foreach (BaseObject obj in _objsA)
+            foreach (BaseObject obj in asteroids)
                 obj.Draw();
-            foreach (BaseObject obj in _objsB)
+            foreach (BaseObject obj in stars)
                 obj.Draw();
-            foreach (BaseObject obj in _objsC)
+            foreach (BaseObject obj in fighters)
                 obj.Draw();
             missle.Draw();
         }
@@ -148,38 +153,47 @@ namespace CS_Part2_Lesson1
         public static void Load()
         {
             
-            _objsA = new BaseObject[30];
-            _objsB = new BaseObject[60];
-            _objsC = new BaseObject[5];
+            asteroids = new BaseObject[30];
+            stars = new BaseObject[60];
+            fighters = new BaseObject[5];
 
             Random rand = new Random();
 
-            missle = new Missle(new Point(0, rand.Next(400)), new Point(10, 0), new Size(25, 4));
+            missle = new Missle(new Point(0, rand.Next(400)), new Point(15, 0), new Size(50, 2));
 
+            LoadImages();
+
+            for (int i = 0; i < asteroids.Length; i++)
+                asteroids[i] = new Asteroids(new Point(rand.Next(600), i * 20), new Point(10- i, 10- i), new Size(40, 40));
+
+            for (int i = 0; i < stars.Length; i++)
+                stars[i] = new Star(new Point(rand.Next(780), rand.Next(590)), new Point(20-i, 5-i), new Size(20, 20));
+
+            for (int i = 0; i < fighters.Length; i++)
+                fighters[i] = new Fighter(new Point(rand.Next(700), rand.Next(550)), new Point(5 + i, 5 - i), new Size(100, 109));
+
+
+            
+        }
+
+
+        private static void LoadImages()
+        {
             Asteroids.Image = Image.FromFile("Assets//asteroid2.png");
-            for (int i = 0; i < _objsA.Length; i++)
-                _objsA[i] = new Asteroids(new Point(rand.Next(600), i * 20), new Point(10- i, 10- i), new Size(40, 40));
-
             Star.Image = Image.FromFile("Assets\\star5.png");
-            for (int i = 0; i < _objsB.Length; i++)
-                _objsB[i] = new Star(new Point(rand.Next(780), rand.Next(590)), new Point(20-i, 5-i), new Size(20, 20));
-
             Fighter.Image = Image.FromFile("Assets\\fighter.png");
-            for (int i = 0; i < _objsC.Length; i++)
-                _objsC[i] = new Fighter(new Point(rand.Next(700), rand.Next(550)), new Point(5 + i, 5 - i), new Size(100, 109));
-
             Game.background = Image.FromFile("Assets\\galaktika4.jpg");
-
-            SoundPlayer soundPlayer = new SoundPlayer("Assets\\sound.wav");
-            soundPlayer.Play();
-
-           
+         
 
         }
 
+        private void PlaySoundtrack()
+        {
+            SoundPlayer soundPlayer = new SoundPlayer("Assets\\sound.wav");
+            soundPlayer.PlayLooping();
+        }
+
         
-
-
 
 
 

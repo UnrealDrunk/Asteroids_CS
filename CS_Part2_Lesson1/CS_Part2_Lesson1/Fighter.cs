@@ -32,10 +32,10 @@ namespace CS_Part2_Lesson1
         {
             Pos.X = Pos.X + Dir.X;
             Pos.Y = Pos.Y + Dir.Y;
-            if (Pos.X < 100) Dir.X = -Dir.X;
-            if (Pos.X > Game.Width) Dir.X = -Dir.X;
-            if (Pos.Y < 100) Dir.Y = -Dir.Y;
-            if (Pos.Y > Game.Height) Dir.Y = -Dir.Y;
+            if (Pos.X < 100) Dir.X =- Dir.X;
+            if (Pos.X > Game.Width-100) Dir.X = -Dir.X;
+            if (Pos.Y < 100) Dir.Y =- Dir.Y;
+            if (Pos.Y > Game.Height-100) Dir.Y = -Dir.Y;
         }
 
         public override void GetStartPosition()
