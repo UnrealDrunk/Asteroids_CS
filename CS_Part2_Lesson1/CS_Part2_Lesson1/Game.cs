@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Media;
 
 namespace CS_Part2_Lesson1
 {
@@ -135,6 +136,8 @@ namespace CS_Part2_Lesson1
             for (int i = 0; i < _objsC.Length; i++)
                 _objsC[i] = new Fighter(new Point(rand.Next(700), rand.Next(550)), new Point(5 + i, 5 - i), new Size(100, 109));
 
+            SoundPlayer soundPlayer = new SoundPlayer("Assets\\sound.wav");
+            soundPlayer.Play();
 
         }
 
