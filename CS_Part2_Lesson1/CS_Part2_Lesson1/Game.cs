@@ -5,7 +5,7 @@ using System.Media;
 
 namespace CS_Part2_Lesson1
 {
-    static class Game
+     class Game
     {
         private static BufferedGraphicsContext _context;
         public static BufferedGraphics Buffer;
@@ -15,14 +15,14 @@ namespace CS_Part2_Lesson1
         public static int Width { get; set; }
         public static int Height { get; set; }
 
-        
+        static Image background;
 
         static Game()
         {
 
         }
 
-        public static void Init(Form form)
+        public virtual void Init(Form form)
         {
             //графическое устройство для вывода графики
             Graphics g;
@@ -42,16 +42,22 @@ namespace CS_Part2_Lesson1
 
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
 
-            Load();
+           
 
-            Timer timer = new Timer { Interval = 100 };
-            timer.Start();
-            timer.Tick += Timer_Tick;
+            if(GetType()==typeof(Game))
+            {
+                Load();
+
+                Timer timer = new Timer { Interval = 100 };
+                timer.Start();
+                timer.Tick += Timer_Tick;
+
+            }
 
 
         }
 
-        public static void Draw()
+        public virtual void Draw()
         {
             // проверяем вывод графики
 
@@ -63,7 +69,9 @@ namespace CS_Part2_Lesson1
 
             //Buffer.Render();
 
-            Buffer.Graphics.Clear(Color.Black);
+            //Buffer.Graphics.Clear(Color.Black);
+
+            Buffer.Graphics.DrawImage(background, new Point(0, 0));
       
             ObjectDraw();
           
@@ -75,7 +83,7 @@ namespace CS_Part2_Lesson1
 
         }
 
-        private static void Timer_Tick(object sender, EventArgs e)
+        private  void Timer_Tick(object sender, EventArgs e)
         {
             Draw();
             Update();
@@ -135,6 +143,8 @@ namespace CS_Part2_Lesson1
             Fighter.Image = Image.FromFile("Assets\\fighter.png");
             for (int i = 0; i < _objsC.Length; i++)
                 _objsC[i] = new Fighter(new Point(rand.Next(700), rand.Next(550)), new Point(5 + i, 5 - i), new Size(100, 109));
+
+            Game.background = Image.FromFile("Assets\\galaktika4.jpg");
 
             SoundPlayer soundPlayer = new SoundPlayer("Assets\\sound.wav");
             soundPlayer.Play();

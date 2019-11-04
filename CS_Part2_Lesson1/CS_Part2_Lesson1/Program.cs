@@ -16,12 +16,12 @@ namespace CS_Part2_Lesson1
                 Width = 800,
                 Height = 600,
             };
-         
-            Game.Init(form);
+
             form.Show();
-            Game.Draw();
+            SplashScreen mainMenu = new SplashScreen();
+            mainMenu.Init(form);
+            mainMenu.Draw();
             Application.Run(form);
-            Console.ReadKey();
         }
     }
 }
