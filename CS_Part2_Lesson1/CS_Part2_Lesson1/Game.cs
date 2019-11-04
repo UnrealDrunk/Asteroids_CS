@@ -15,7 +15,14 @@ namespace CS_Part2_Lesson1
         public static int Width { get; set; }
         public static int Height { get; set; }
 
+        public static BaseObject[] _objsA;
+        public static BaseObject[] _objsB;
+        public static BaseObject[] _objsC;
+        static Missle missle;
+
+
         static Image background;
+
 
         static Game()
         {
@@ -99,7 +106,19 @@ namespace CS_Part2_Lesson1
             foreach (BaseObject obj in _objsB)
                 obj.Update();
             foreach (BaseObject obj in _objsC)
+            {
                 obj.Update();
+                if (obj.Collision(missle))
+                {
+                    System.Media.SystemSounds.Hand.Play();
+                    Console.WriteLine("Missle Hit!");
+                    
+                    
+                };
+               
+            }
+
+            missle.Update();
 
         }
 
@@ -111,14 +130,12 @@ namespace CS_Part2_Lesson1
                 obj.Draw();
             foreach (BaseObject obj in _objsC)
                 obj.Draw();
-
+            missle.Draw();
         }
 
 
 
-        public static BaseObject[] _objsA;
-        public static BaseObject[] _objsB;
-        public static BaseObject[] _objsC;
+       
 
 
 
@@ -127,10 +144,11 @@ namespace CS_Part2_Lesson1
             
             _objsA = new BaseObject[30];
             _objsB = new BaseObject[60];
-            _objsC = new BaseObject[4];
+            _objsC = new BaseObject[5];
 
             Random rand = new Random();
-            
+
+            missle = new Missle(new Point(0, rand.Next(400)), new Point(25, 0), new Size(25, 4));
 
             Asteroids.Image = Image.FromFile("Assets//asteroid2.png");
             for (int i = 0; i < _objsA.Length; i++)
@@ -149,8 +167,26 @@ namespace CS_Part2_Lesson1
             SoundPlayer soundPlayer = new SoundPlayer("Assets\\sound.wav");
             soundPlayer.Play();
 
+           
+
         }
+
+        
+
+
+
+
 
 
     }
+
+    interface ICollision
+    {
+        bool Collision(ICollision obj);
+        Rectangle Rect { get; }
+
+    }
+
+
+
 }

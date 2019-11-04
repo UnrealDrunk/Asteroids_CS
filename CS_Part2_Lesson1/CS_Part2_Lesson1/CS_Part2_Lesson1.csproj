@@ -49,6 +49,7 @@
     <Compile Include="BaseObjectcs.cs" />
     <Compile Include="Fighter.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Missle.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SplashScreen.cs" />

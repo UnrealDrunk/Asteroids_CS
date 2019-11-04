@@ -11,9 +11,11 @@ namespace CS_Part2_Lesson1
     {
         public static Image Image { get; set; }
 
+        public int Power { get; set; }
+
         public Fighter(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
-
+            Power = 1;
         }
 
         public override void Draw()
@@ -33,6 +35,9 @@ namespace CS_Part2_Lesson1
             if (Pos.Y < 100) Dir.Y = -Dir.Y;
             if (Pos.Y > Game.Height) Dir.Y = -Dir.Y;
         }
+
+
+
 
     }
 }
