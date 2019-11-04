@@ -33,11 +33,15 @@ namespace CS_Part2_Lesson1
                 Pos.X = 0;
                 Pos.Y += ChangePosY();
             }
-                
-
-
-
+               
         }
+
+        public void GetStartPosition()
+        {
+            Pos.X = 0;
+           
+        }
+
 
         private int ChangePosY()
         {

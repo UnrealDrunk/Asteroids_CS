@@ -108,17 +108,23 @@ namespace CS_Part2_Lesson1
             foreach (BaseObject obj in _objsC)
             {
                 obj.Update();
-                if (obj.Collision(missle))
+                if(!obj.Collision(missle))
+                {
+                    missle.Update();
+                }  
+                else
                 {
                     System.Media.SystemSounds.Hand.Play();
                     Console.WriteLine("Missle Hit!");
-                    
-                    
-                };
+
+                    missle.GetStartPosition();
+                    missle.Update();
+                }
                
             }
+            
 
-            missle.Update();
+                //missle.Update();
 
         }
 
@@ -148,7 +154,7 @@ namespace CS_Part2_Lesson1
 
             Random rand = new Random();
 
-            missle = new Missle(new Point(0, rand.Next(400)), new Point(25, 0), new Size(25, 4));
+            missle = new Missle(new Point(0, rand.Next(400)), new Point(10, 0), new Size(25, 4));
 
             Asteroids.Image = Image.FromFile("Assets//asteroid2.png");
             for (int i = 0; i < _objsA.Length; i++)
