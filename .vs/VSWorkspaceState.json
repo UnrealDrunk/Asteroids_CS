@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\CS_Part2_Lesson1",
+    "\\CS_Part2_Lesson1\\CS_Part2_Lesson1",
+    "\\CS_Part2_Lesson1\\CS_Part2_Lesson1\\Assets"
   ],
+  "SelectedNode": "\\CS_Part2_Lesson1\\CS_Part2_Lesson1\\Asteroids.cs",
   "PreviewInSolutionExplorer": false
 }
