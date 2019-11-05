@@ -224,17 +224,21 @@ namespace CS_Part2_Lesson1
             fighters = new BaseObject[5];
             //object parameters
 
-            int posX = 700;
-            int posY = 550;
-            int dirX = 5;
-            int dirY = 5;
             int sizewWidth = 100;
             int sizeHeight = 109;
+            int posXleft = sizewWidth+10 ;
+            int posXright = Game.Width - (sizewWidth + 10);
+            int posYup = sizeHeight + 10;
+            int posYdown = Game.Height - (sizeHeight + 10);
+            int dirX = 5;
+            int dirY = 5;
+            
 
             //object game logic
 
             for (int i = 0; i < fighters.Length; i++)
-                fighters[i] = new Fighter(new Point(rand.Next(posX), rand.Next(posY)),
+                fighters[i] = new Fighter(new Point(rand.Next(posXleft, posXright),
+                    rand.Next(posYup, posYdown)),
                     new Point(dirX + i, dirY - i), new Size(sizewWidth, sizeHeight));
 
         }
