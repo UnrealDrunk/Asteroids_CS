@@ -18,7 +18,7 @@ namespace CS_Part2_Lesson1
         public static BaseObject[] asteroids;
         public static BaseObject[] stars;
         public static BaseObject[] fighters;
-        static Missle missle;
+        static Missile missile;
 
 
         static Image background;
@@ -84,10 +84,7 @@ namespace CS_Part2_Lesson1
       
             ObjectDraw();
           
-          
             Buffer.Render();
-
-
 
 
         }
@@ -105,26 +102,26 @@ namespace CS_Part2_Lesson1
         {
            
 
-            foreach (BaseObject obj in asteroids)
-                obj.Update();
-            foreach (BaseObject obj in stars)
-                obj.Update();
+            foreach (BaseObject asteroid in asteroids)
+                asteroid.Update();
+            foreach (BaseObject star in stars)
+                star.Update();
             for (int i = 0; i < fighters.Length; i++)
             {
                 fighters[i].Update();
-                if(!fighters[i].Collision(missle))
+                if(!fighters[i].Collision(missile))
                 {
 
-                    missle.Update();
+                    missile.Update();
                 }  
                 else
                 {
                     System.Media.SystemSounds.Hand.Play();
-                    Console.WriteLine("Missle Hit!");
+                    Console.WriteLine("Missile Hit!");
                     
                     fighters[i].GetStartPosition();
-                    missle.GetStartPosition();
-                    missle.Update();
+                    missile.GetStartPosition();
+                    missile.Update();
                 }
                
             }
@@ -140,44 +137,108 @@ namespace CS_Part2_Lesson1
                 obj.Draw();
             foreach (BaseObject obj in fighters)
                 obj.Draw();
-            missle.Draw();
+            missile.Draw();
         }
-
-
-
-       
-
 
 
         public static void Load()
         {
-            
-            asteroids = new BaseObject[30];
-            stars = new BaseObject[60];
-            fighters = new BaseObject[5];
-
-            Random rand = new Random();
-
-            missle = new Missle(new Point(0, rand.Next(400)),
-                new Point(15, 0), new Size(50, 2));
 
             LoadImages();
+            LoadObjMissle();
+            LoadObjAsterioids();
+            LoadObjStars();
+            LoadObjFighters();
+
+        }
+
+
+
+        private static void LoadObjMissle()
+        {
+            Random rand = new Random();
+            //object parameters
+            int posX = 0;
+            int posY = rand.Next(posX, 400);
+            int dirX = 15;
+            int dirY = 0;
+            int sizewWidth = 50;
+            int sizeHeight = 2;
+
+            if (dirX < 0)
+                throw new Exception("Missile flies wrong way, please check " +
+                    "it's direction dirX parameter inside LoadObjMissle method");
+
+
+            //object game logic
+            missile = new Missile(new Point(posX, posY),
+               new Point(dirX, dirY), new Size(sizewWidth, sizeHeight));
+
+        }
+
+        private static void LoadObjAsterioids()
+        {
+            Random rand = new Random();
+            asteroids = new BaseObject[30];
+            //object parameters
+
+            int posX = 600;
+            int posY = 20;
+            int dirX = 10;
+            int dirY = 10;
+            int sizewWidth = 40;
+            int sizeHeight = 40;
+
+            //object game logic
 
             for (int i = 0; i < asteroids.Length; i++)
-                asteroids[i] = new Asteroids(new Point(rand.Next(600), i * 20),
-                    new Point(10- i, 10- i), new Size(40, 40));
+                asteroids[i] = new Asteroids(new Point(rand.Next(posX), i * posY),
+                    new Point(dirX - i, dirY - i), new Size(sizewWidth, sizeHeight));
+
+        }
+
+        private static void LoadObjStars()
+        {
+            Random rand = new Random();
+            stars = new BaseObject[60];
+            //object parameters
+
+            int posX = 680;
+            int posY = 490;
+            int dirX = 20;
+            int dirY = 5;
+            int sizewWidth = 20;
+            int sizeHeight = 20;
+
+            //object game logic
 
             for (int i = 0; i < stars.Length; i++)
-                stars[i] = new Star(new Point(rand.Next(780), rand.Next(590)),
-                    new Point(20-i, 5-i), new Size(20, 20));
+                stars[i] = new Star(new Point(rand.Next(posX), rand.Next(posY)),
+                    new Point(dirX - i, dirY - i), new Size(sizewWidth, sizeHeight));
+        }
+
+
+        private static void LoadObjFighters()
+        {
+            Random rand = new Random();
+            fighters = new BaseObject[5];
+            //object parameters
+
+            int posX = 700;
+            int posY = 550;
+            int dirX = 5;
+            int dirY = 5;
+            int sizewWidth = 100;
+            int sizeHeight = 109;
+
+            //object game logic
 
             for (int i = 0; i < fighters.Length; i++)
-                fighters[i] = new Fighter(new Point(rand.Next(700), rand.Next(550)),
-                    new Point(5 + i, 5 - i), new Size(100, 109));
+                fighters[i] = new Fighter(new Point(rand.Next(posX), rand.Next(posY)),
+                    new Point(dirX + i, dirY - i), new Size(sizewWidth, sizeHeight));
 
-
-            
         }
+
 
 
         private static void LoadImages()
@@ -195,6 +256,7 @@ namespace CS_Part2_Lesson1
             SoundPlayer soundPlayer = new SoundPlayer("Assets\\sound.wav");
             soundPlayer.PlayLooping();
         }
+
 
 
     }

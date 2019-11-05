@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace CS_Part2_Lesson1
 {
-    class Missle: BaseObject
+    class Missile: BaseObject
     {
         int speed;
         Random rand = new Random();
 
-        public Missle(Point pos, Point dir, Size size): base(pos, dir, size)
+        public Missile(Point pos, Point dir, Size size): base(pos, dir, size)
         {
             speed = dir.X;
         }
