@@ -11,6 +11,8 @@ namespace CS_Part2_Lesson1
     {
         private int energy = 200;
         public int Energy => energy;
+        public static Image Image { get; set; }
+
 
         public void EnergyLow(int n)
         {
@@ -23,12 +25,9 @@ namespace CS_Part2_Lesson1
         }
 
 
-
-
-
         public override void Draw()
         {
-            Game.Buffer.Graphics.FillEllipse(Brushes.Wheat, Pos.X, Pos.Y, size.Width, size.Height);
+            Game.Buffer.Graphics.DrawImage(Image, Pos);
         }
 
 

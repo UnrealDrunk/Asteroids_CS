@@ -5,11 +5,11 @@ using System.Media;
 
 namespace CS_Part2_Lesson1
 {
-     class Game
+    class Game
     {
         private static BufferedGraphicsContext _context;
         public static BufferedGraphics Buffer;
-        
+
         // Width and Height of the Game field
 
         public static int Width { get; set; }
@@ -49,19 +49,19 @@ namespace CS_Part2_Lesson1
             Width = form.ClientSize.Width;
             Height = form.ClientSize.Height;
 
-            
+
             //Associate a buffer in memory with a graphic object to draw in the buffer
 
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
 
-           
 
-            if(GetType()==typeof(Game))
+
+            if (GetType() == typeof(Game))
             {
                 Load();
                 PlaySoundtrack();
 
-               
+
                 timer.Start();
                 timer.Tick += Timer_Tick;
 
@@ -102,15 +102,15 @@ namespace CS_Part2_Lesson1
             //Buffer.Graphics.Clear(Color.Black);
 
             Buffer.Graphics.DrawImage(background, new Point(0, 0));
-      
+
             ObjectDraw();
-          
+
             Buffer.Render();
 
 
         }
 
-        private  void Timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e)
         {
             Draw();
             Update();
@@ -121,7 +121,7 @@ namespace CS_Part2_Lesson1
 
         public static void Update()
         {
-           
+
 
             foreach (BaseObject asteroid in asteroids)
                 asteroid.Update();
@@ -134,7 +134,7 @@ namespace CS_Part2_Lesson1
                 if (fighters[i] == null)
                     continue;
                 fighters[i].Update();
-                if (missile != null && missile.Collision(fighters[i])) 
+                if (missile != null && missile.Collision(fighters[i]))
                 {
                     System.Media.SystemSounds.Hand.Play();
                     fighters[i] = null;
@@ -144,11 +144,11 @@ namespace CS_Part2_Lesson1
 
                 if (!ship.Collision(fighters[i]))
                     continue;
-              
+
 
 
                 var rnd = new Random();
-                ship.EnergyLow(rnd.Next(15,30));
+                ship.EnergyLow(rnd.Next(15, 30));
                 System.Media.SystemSounds.Asterisk.Play();
                 if (ship.Energy <= 0)
                     ship.Die();
@@ -170,14 +170,14 @@ namespace CS_Part2_Lesson1
             //    {
             //        System.Media.SystemSounds.Hand.Play();
             //        Console.WriteLine("Missile Hit!");
-                    
+
             //        fighters[i].GetStartPosition();
             //        missile.GetStartPosition();
             //        missile.Update();
             //    }
-               
+
             //}
-            
+
 
         }
 
@@ -196,7 +196,7 @@ namespace CS_Part2_Lesson1
             }
             missile?.Draw();
             ship?.Draw();
-            if(ship !=null)
+            if (ship != null)
             {
                 Buffer.Graphics.DrawString("Energy: " + ship.Energy, SystemFonts.DefaultFont,
                     Brushes.White, 0, 0);
@@ -297,13 +297,13 @@ namespace CS_Part2_Lesson1
 
             int sizewWidth = 100;
             int sizeHeight = 109;
-            int posXleft = sizewWidth+10 ;
+            int posXleft = sizewWidth + 10;
             int posXright = Game.Width - (sizewWidth + 10);
             int posYup = sizeHeight + 10;
             int posYdown = Game.Height - (sizeHeight + 10);
             int dirX = 5;
             int dirY = 5;
-            
+
 
             //object game logic
 
@@ -316,15 +316,6 @@ namespace CS_Part2_Lesson1
 
 
 
-        private static void LoadImages()
-        {
-            Asteroids.Image = Image.FromFile("Assets//asteroid2.png");
-            Star.Image = Image.FromFile("Assets\\star5.png");
-            Fighter.Image = Image.FromFile("Assets\\fighter.png");
-            Game.background = Image.FromFile("Assets\\galaktika4.jpg");
-         
-
-        }
 
         public static void LoadShip()
         {
@@ -333,14 +324,27 @@ namespace CS_Part2_Lesson1
             int posY = 400;
             int dirX = 5;
             int dirY = 5;
-            int sizewWidth = 50;
-            int sizeHeight = 50;
-        
+            int sizewWidth = 100;
+            int sizeHeight = 82;
+
 
             ship = new Ship(new Point(posX, posY), new Point(dirX, dirY),
                 new Size(sizewWidth, sizeHeight));
         }
 
+
+
+
+        private static void LoadImages()
+        {
+            Asteroids.Image = Image.FromFile("Assets//asteroid2.png");
+            Star.Image = Image.FromFile("Assets\\star5.png");
+            Fighter.Image = Image.FromFile("Assets\\fighter.png");
+            Game.background = Image.FromFile("Assets\\galaktika4.jpg");
+            Ship.Image = Image.FromFile("Assets\\ship2.png");
+
+
+        }
 
 
         private void PlaySoundtrack()
@@ -371,9 +375,6 @@ namespace CS_Part2_Lesson1
 
 
     }
-
-
-
 
 
 
