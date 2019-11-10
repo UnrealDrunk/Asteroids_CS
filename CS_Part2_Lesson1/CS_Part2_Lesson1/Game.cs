@@ -79,7 +79,7 @@ namespace CS_Part2_Lesson1
         public static void Finish()
         {
             timer.Stop();
-            Buffer.Graphics.DrawString("The End", new Font(FontFamily.GenericSansSerif, 60, FontStyle.Underline),
+            Buffer.Graphics.DrawString("Mission Failed", new Font(FontFamily.GenericSansSerif, 60, FontStyle.Underline),
                 Brushes.White, 200, 100);
             Buffer.Render();
         }
@@ -129,7 +129,17 @@ namespace CS_Part2_Lesson1
             foreach (BaseObject star in stars)
                 star.Update();
             foreach (BaseObject powerUp in powerUps)
+            {
                 powerUp.Update();
+                var rnd = new Random();
+                if (powerUp.Collision(ship))
+                {
+                    ship.EnergyRise(rnd.Next(15, 30));
+                    System.Media.SystemSounds.Asterisk.Play();
+                }
+                
+             
+            }
 
             missile?.Update();
             for (var i = 0; i < fighters.Length; i++)
@@ -203,13 +213,16 @@ namespace CS_Part2_Lesson1
             ship?.Draw();
             if (ship != null)
             {
-                Buffer.Graphics.DrawString("Energy: " + ship.Energy, SystemFonts.DefaultFont,
+                Buffer.Graphics.DrawString("Energy: " + ship.Energy, 
+                    new Font(FontFamily.GenericSansSerif,20, FontStyle.Regular),
                     Brushes.White,0,0);
 
-                Buffer.Graphics.DrawString("Figters Down: " + ship.FightersDown, SystemFonts.DefaultFont,
+                Buffer.Graphics.DrawString("Figters Down: " + ship.FightersDown,
+                    new Font(FontFamily.GenericSansSerif, 20, FontStyle.Regular),
                  Brushes.White, 0, 30);
             }
-
+            //Buffer.Graphics.DrawString("Mission Failed", new Font(FontFamily.GenericSansSerif, 60, FontStyle.Underline),
+            //   Brushes.White, 200, 100);
             foreach (BaseObject obj in powerUps)
                 obj.Draw();
 

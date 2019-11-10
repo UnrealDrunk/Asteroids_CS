@@ -25,6 +25,14 @@ namespace CS_Part2_Lesson1
         }
 
 
+        public void EnergyRise(int n)
+        {
+            while(energy < 301)
+                energy += n;
+
+        }
+
+
         public void FightersCount(int n)
         {
             fightersDown += n;
