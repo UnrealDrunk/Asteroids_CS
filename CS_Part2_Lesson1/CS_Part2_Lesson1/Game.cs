@@ -139,6 +139,7 @@ namespace CS_Part2_Lesson1
                     System.Media.SystemSounds.Hand.Play();
                     fighters[i] = null;
                     missile = null;
+                    ship.FightersCount(1);
                     continue;
                 }
 
@@ -199,7 +200,10 @@ namespace CS_Part2_Lesson1
             if (ship != null)
             {
                 Buffer.Graphics.DrawString("Energy: " + ship.Energy, SystemFonts.DefaultFont,
-                    Brushes.White, 0, 0);
+                    Brushes.White,0,0);
+
+                Buffer.Graphics.DrawString("Figters Down: " + ship.FightersDown, SystemFonts.DefaultFont,
+                 Brushes.White, 0, 30);
             }
 
 

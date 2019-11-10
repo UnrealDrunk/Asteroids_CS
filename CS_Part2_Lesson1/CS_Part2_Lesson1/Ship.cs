@@ -9,14 +9,24 @@ namespace CS_Part2_Lesson1
 {
     class Ship: BaseObject
     {
-        private int energy = 200;
+        private int energy = 300;
         public int Energy => energy;
+
+        private int fightersDown;
+        public int FightersDown => fightersDown;
         public static Image Image { get; set; }
+
 
 
         public void EnergyLow(int n)
         {
             energy -=n;
+        }
+
+
+        public void FightersCount(int n)
+        {
+            fightersDown += n;
         }
 
         public Ship(Point pos, Point dir, Size size): base(pos,dir,size)

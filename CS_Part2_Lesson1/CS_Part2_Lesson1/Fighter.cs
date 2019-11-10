@@ -13,6 +13,10 @@ namespace CS_Part2_Lesson1
 
         public int Power { get; set; }
 
+       
+
+     
+
         Random rand = new Random();
 
         public Fighter(Point pos, Point dir, Size size) : base(pos, dir, size)
