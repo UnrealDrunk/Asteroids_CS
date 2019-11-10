@@ -19,7 +19,7 @@ namespace CS_Part2_Lesson1
         public static BaseObject[] stars;
         public static BaseObject[] fighters;
         static Missile missile;
-        static Ship ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(50, 50));
+        static Ship ship;
 
         static Image background;
 
@@ -129,12 +129,12 @@ namespace CS_Part2_Lesson1
                 star.Update();
 
             missile?.Update();
-            for(var i =0; i < fighters.Length;i++)
+            for (var i = 0; i < fighters.Length; i++)
             {
                 if (fighters[i] == null)
                     continue;
                 fighters[i].Update();
-                if(missile != null && missile.Collision(fighters[i]) )
+                if (missile != null && missile.Collision(fighters[i])) 
                 {
                     System.Media.SystemSounds.Hand.Play();
                     fighters[i] = null;
@@ -144,8 +144,11 @@ namespace CS_Part2_Lesson1
 
                 if (!ship.Collision(fighters[i]))
                     continue;
+              
+
+
                 var rnd = new Random();
-                ship.EnergyLow(rnd.Next(1, 10));
+                ship.EnergyLow(rnd.Next(15,30));
                 System.Media.SystemSounds.Asterisk.Play();
                 if (ship.Energy <= 0)
                     ship.Die();
@@ -217,7 +220,7 @@ namespace CS_Part2_Lesson1
             LoadObjAsterioids();
             LoadObjStars();
             LoadObjFighters();
-            //LoadShip();
+            LoadShip();
         }
 
 
@@ -289,7 +292,7 @@ namespace CS_Part2_Lesson1
         private static void LoadObjFighters()
         {
             Random rand = new Random();
-            fighters = new BaseObject[5];
+            fighters = new BaseObject[15];
             //object parameters
 
             int sizewWidth = 100;
@@ -325,7 +328,17 @@ namespace CS_Part2_Lesson1
 
         public static void LoadShip()
         {
-           // Ship ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(50, 50));
+
+            int posX = 10;
+            int posY = 400;
+            int dirX = 5;
+            int dirY = 5;
+            int sizewWidth = 50;
+            int sizeHeight = 50;
+        
+
+            ship = new Ship(new Point(posX, posY), new Point(dirX, dirY),
+                new Size(sizewWidth, sizeHeight));
         }
 
 
@@ -346,7 +359,10 @@ namespace CS_Part2_Lesson1
                 ship.Up();
             if (e.KeyCode == Keys.Down)
                 ship.Down();
-
+            if (e.KeyCode == Keys.Left)
+                ship.Left();
+            if (e.KeyCode == Keys.Right)
+                ship.Right();
 
         }
 

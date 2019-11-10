@@ -9,12 +9,12 @@ namespace CS_Part2_Lesson1
 {
     class Ship: BaseObject
     {
-        private int energy = 100;
+        private int energy = 200;
         public int Energy => energy;
 
         public void EnergyLow(int n)
         {
-            energy = -n;
+            energy -=n;
         }
 
         public Ship(Point pos, Point dir, Size size): base(pos,dir,size)
@@ -40,9 +40,22 @@ namespace CS_Part2_Lesson1
 
         public void Down()
         {
-            if (Pos.Y < Game.Height) Pos.Y = Pos.Y + Dir.Y;
+            if (Pos.Y < Game.Height-50) Pos.Y = Pos.Y + Dir.Y;
 
         }
+
+
+        public void Left()
+        {
+            if(Pos.X > 0) Pos.X = Pos.X - Dir.X;
+        }
+
+        public void Right()
+        {
+            if (Pos.Y < Game.Width-50) Pos.X = Pos.X + Dir.X;
+
+        }
+
 
         public delegate void Message();
         public static event Message MessageDie;
