@@ -14,6 +14,7 @@ namespace CS_Part2_Lesson1
 
         private int fightersDown;
         public int FightersDown => fightersDown;
+
         public static Image Image { get; set; }
 
 

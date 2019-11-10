@@ -20,6 +20,7 @@ namespace CS_Part2_Lesson1
         public static BaseObject[] fighters;
         static Missile missile;
         static Ship ship;
+        public static BaseObject[] powerUps;
 
         static Image background;
 
@@ -127,6 +128,8 @@ namespace CS_Part2_Lesson1
                 asteroid.Update();
             foreach (BaseObject star in stars)
                 star.Update();
+            foreach (BaseObject powerUp in powerUps)
+                powerUp.Update();
 
             missile?.Update();
             for (var i = 0; i < fighters.Length; i++)
@@ -153,6 +156,7 @@ namespace CS_Part2_Lesson1
                 System.Media.SystemSounds.Asterisk.Play();
                 if (ship.Energy <= 0)
                     ship.Die();
+              
 
 
             }
@@ -206,7 +210,8 @@ namespace CS_Part2_Lesson1
                  Brushes.White, 0, 30);
             }
 
-
+            foreach (BaseObject obj in powerUps)
+                obj.Draw();
 
 
             //foreach (BaseObject obj in fighters)
@@ -225,6 +230,7 @@ namespace CS_Part2_Lesson1
             LoadObjStars();
             LoadObjFighters();
             LoadShip();
+            LoadPowerUp();
         }
 
 
@@ -337,6 +343,33 @@ namespace CS_Part2_Lesson1
         }
 
 
+        public static void LoadPowerUp()
+        {
+            Random rand = new Random();
+
+            powerUps = new BaseObject[5];
+            int sizewWidth = 30;
+            int sizeHeight = 43;
+            int posXleft = sizewWidth + 10;
+            int posXright = Game.Width - (sizewWidth + 10);
+            int posYup = sizeHeight + 10;
+            int posYdown = Game.Height - (sizeHeight + 10);
+            int dirX = 5;
+            int dirY = 5;
+
+
+            //object game logic
+
+            for (int i = 0; i < powerUps.Length; i++)
+                powerUps[i] = new PowerUp(new Point(rand.Next(posXleft, posXright),
+                    rand.Next(posYup, posYdown)),
+                    new Point(dirX + i, dirY - i), new Size(sizewWidth, sizeHeight));
+
+        }
+
+
+
+
 
 
         private static void LoadImages()
@@ -346,7 +379,7 @@ namespace CS_Part2_Lesson1
             Fighter.Image = Image.FromFile("Assets\\fighter.png");
             Game.background = Image.FromFile("Assets\\galaktika4.jpg");
             Ship.Image = Image.FromFile("Assets\\ship2.png");
-
+            PowerUp.Image = Image.FromFile("Assets\\r2d2.png");
 
         }
 
