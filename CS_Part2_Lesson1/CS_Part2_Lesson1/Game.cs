@@ -19,9 +19,13 @@ namespace CS_Part2_Lesson1
         public static BaseObject[] stars;
         public static BaseObject[] fighters;
         static Missile missile;
-
+        static Ship ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(50, 50));
 
         static Image background;
+
+        private static Timer timer = new Timer { Interval = 100 };
+
+
 
 
         static Game()
@@ -57,14 +61,31 @@ namespace CS_Part2_Lesson1
                 Load();
                 PlaySoundtrack();
 
-                Timer timer = new Timer { Interval = 100 };
+               
                 timer.Start();
                 timer.Tick += Timer_Tick;
 
             }
 
 
+            form.KeyDown += Form_KeyDown;
+
+            Ship.MessageDie += Finish;
+
         }
+
+
+        public static void Finish()
+        {
+            timer.Stop();
+            Buffer.Graphics.DrawString("The End", new Font(FontFamily.GenericSansSerif, 60, FontStyle.Underline),
+                Brushes.White, 200, 100);
+            Buffer.Render();
+        }
+
+
+
+
 
         public virtual void Draw()
         {
@@ -106,38 +127,85 @@ namespace CS_Part2_Lesson1
                 asteroid.Update();
             foreach (BaseObject star in stars)
                 star.Update();
-            for (int i = 0; i < fighters.Length; i++)
-            {
-                fighters[i].Update();
-                if(!fighters[i].Collision(missile))
-                {
 
-                    missile.Update();
-                }  
-                else
+            missile?.Update();
+            for(var i =0; i < fighters.Length;i++)
+            {
+                if (fighters[i] == null)
+                    continue;
+                fighters[i].Update();
+                if(missile != null && missile.Collision(fighters[i]) )
                 {
                     System.Media.SystemSounds.Hand.Play();
-                    Console.WriteLine("Missile Hit!");
-                    
-                    fighters[i].GetStartPosition();
-                    missile.GetStartPosition();
-                    missile.Update();
+                    fighters[i] = null;
+                    missile = null;
+                    continue;
                 }
-               
+
+                if (!ship.Collision(fighters[i]))
+                    continue;
+                var rnd = new Random();
+                ship.EnergyLow(rnd.Next(1, 10));
+                System.Media.SystemSounds.Asterisk.Play();
+                if (ship.Energy <= 0)
+                    ship.Die();
+
+
             }
+
+
+
+            //for (int i = 0; i < fighters.Length; i++)
+            //{
+            //    fighters[i].Update();
+            //    if(!fighters[i].Collision(missile))
+            //    {
+
+            //        missile.Update();
+            //    }  
+            //    else
+            //    {
+            //        System.Media.SystemSounds.Hand.Play();
+            //        Console.WriteLine("Missile Hit!");
+                    
+            //        fighters[i].GetStartPosition();
+            //        missile.GetStartPosition();
+            //        missile.Update();
+            //    }
+               
+            //}
             
 
         }
 
         public static void ObjectDraw()
         {
+
+
             foreach (BaseObject obj in asteroids)
                 obj.Draw();
             foreach (BaseObject obj in stars)
                 obj.Draw();
+
             foreach (BaseObject obj in fighters)
-                obj.Draw();
-            missile.Draw();
+            {
+                obj?.Draw();
+            }
+            missile?.Draw();
+            ship?.Draw();
+            if(ship !=null)
+            {
+                Buffer.Graphics.DrawString("Energy: " + ship.Energy, SystemFonts.DefaultFont,
+                    Brushes.White, 0, 0);
+            }
+
+
+
+
+            //foreach (BaseObject obj in fighters)
+            //    obj.Draw();
+            //missile.Draw();
+            //ship.Draw();
         }
 
 
@@ -145,11 +213,11 @@ namespace CS_Part2_Lesson1
         {
 
             LoadImages();
-            LoadObjMissle();
+            //LoadObjMissle();
             LoadObjAsterioids();
             LoadObjStars();
             LoadObjFighters();
-
+            //LoadShip();
         }
 
 
@@ -158,9 +226,9 @@ namespace CS_Part2_Lesson1
         {
             Random rand = new Random();
             //object parameters
-            int posX = 0;
-            int posY = rand.Next(posX, 400);
-            int dirX = 15;
+            int posX = ship.Rect.X + 10;
+            int posY = ship.Rect.Y + 4;
+            int dirX = 45;
             int dirY = 0;
             int sizewWidth = 50;
             int sizeHeight = 2;
@@ -255,6 +323,13 @@ namespace CS_Part2_Lesson1
 
         }
 
+        public static void LoadShip()
+        {
+           // Ship ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(50, 50));
+        }
+
+
+
         private void PlaySoundtrack()
         {
             SoundPlayer soundPlayer = new SoundPlayer("Assets\\sound.wav");
@@ -263,7 +338,29 @@ namespace CS_Part2_Lesson1
 
 
 
+        private static void Form_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.ControlKey)
+                LoadObjMissle();
+            if (e.KeyCode == Keys.Up)
+                ship.Up();
+            if (e.KeyCode == Keys.Down)
+                ship.Down();
+
+
+        }
+
+
+
+
+
     }
+
+
+
+
+
+
 
     interface ICollision
     {

@@ -28,11 +28,11 @@ namespace CS_Part2_Lesson1
             Pos.X = Pos.X + speed;
             
        
-            if (Pos.X >= Game.Width + size.Width)
-            {
-                Pos.X = 0;
-                Pos.Y += ChangePosY();
-            }
+            //if (Pos.X >= Game.Width + size.Width)
+            //{
+            //    Pos.X = 0;
+            //    Pos.Y += ChangePosY();
+            //}
                
         }
 
