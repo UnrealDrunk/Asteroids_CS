@@ -12,7 +12,7 @@ namespace CS_Part2_Lesson1
         private int energy = 300;
         public int Energy => energy;
 
-        private int fightersDown;
+        public int fightersDown;
         public int FightersDown => fightersDown;
 
         private int astroDroid = 5;

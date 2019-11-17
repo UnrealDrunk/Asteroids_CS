@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Media;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CS_Part2_Lesson1
 {
@@ -18,13 +19,16 @@ namespace CS_Part2_Lesson1
 
         public static BaseObject[] asteroids;
         public static BaseObject[] stars;
-        public static BaseObject[] fighters;
+        //public static BaseObject[] fighters;
+        private static List<Fighter> fighters;
         static Missile missile;
         private static List<Missile> missiles = new List<Missile>();
         static Ship ship;
         public static BaseObject[] powerUps;
 
         static Image background;
+
+        private static int fighterCount = 15;
 
         private static Timer timer = new Timer { Interval = 100 };
 
@@ -168,7 +172,7 @@ namespace CS_Part2_Lesson1
                 m.Update();
             }
 
-            for (int i = 0; i < fighters.Length; i++)
+            for (int i = 0; i < fighters.Count; i++)
             {
                 if (fighters[i] == null)
                     continue;
@@ -196,11 +200,17 @@ namespace CS_Part2_Lesson1
                 System.Media.SystemSounds.Asterisk.Play();
                 if (ship.Energy <= 0)
                     ship.Die();
-              
 
 
             }
 
+
+            if(ship.fightersDown ==fighterCount)
+            {
+                fighterCount++;
+                LoadObjFighters(fighterCount);
+                ship.fightersDown = 0;
+            }
 
 
             //for (int i = 0; i < fighters.Length; i++)
@@ -281,7 +291,7 @@ namespace CS_Part2_Lesson1
             //LoadObjMissle();
             LoadObjAsterioids();
             LoadObjStars();
-            LoadObjFighters();
+            LoadObjFighters(fighterCount);
             LoadShip();
             LoadPowerUp();
         }
@@ -289,30 +299,30 @@ namespace CS_Part2_Lesson1
 
     
 
-        private static void LoadObjMissle()
-        {
-            Random rand = new Random();
+        //private static void LoadObjMissle()
+        //{
+        //    Random rand = new Random();
 
-            //object parameters
-            int posX = ship.Rect.X + 10;
-            int posY = ship.Rect.Y + 4;
-            int dirX = 45;
-            int dirY = 0;
-            int sizewWidth = 50;
-            int sizeHeight = 2;
+        //    //object parameters
+        //    int posX = ship.Rect.X + 10;
+        //    int posY = ship.Rect.Y + 4;
+        //    int dirX = 45;
+        //    int dirY = 0;
+        //    int sizewWidth = 50;
+        //    int sizeHeight = 2;
 
-            if (dirX < 0)
-                throw new Exception("Missile flies wrong way, please check " +
-                    "it's direction dirX parameter inside LoadObjMissle method");
+        //    if (dirX < 0)
+        //        throw new Exception("Missile flies wrong way, please check " +
+        //            "it's direction dirX parameter inside LoadObjMissle method");
 
 
-            //object game logic
-            missile = new Missile(new Point(posX, posY),
-               new Point(dirX, dirY), new Size(sizewWidth, sizeHeight));
+        //    //object game logic
+        //    missile = new Missile(new Point(posX, posY),
+        //       new Point(dirX, dirY), new Size(sizewWidth, sizeHeight));
 
             
 
-        }
+        //}
 
         private static void LoadObjAsterioids()
         {
@@ -356,10 +366,13 @@ namespace CS_Part2_Lesson1
         }
 
 
-        private static void LoadObjFighters()
+        private static void LoadObjFighters(int fighterCount)
         {
             Random rand = new Random();
-            fighters = new BaseObject[15];
+            //fighters = new BaseObject[15];
+            fighters = new List<Fighter>();
+
+
             //object parameters
 
             int sizewWidth = 100;
@@ -374,10 +387,16 @@ namespace CS_Part2_Lesson1
 
             //object game logic
 
-            for (int i = 0; i < fighters.Length; i++)
-                fighters[i] = new Fighter(new Point(rand.Next(posXleft, posXright),
+
+           
+
+            for (int i = 0; i < fighterCount; i++)
+            {
+                fighters.Add(new Fighter(new Point(rand.Next(posXleft, posXright),
                     rand.Next(posYup, posYdown)),
-                    new Point(dirX + i, dirY - i), new Size(sizewWidth, sizeHeight));
+                    new Point(dirX + i, dirY - i), new Size(sizewWidth, sizeHeight)));
+            }
+                
 
         }
 
