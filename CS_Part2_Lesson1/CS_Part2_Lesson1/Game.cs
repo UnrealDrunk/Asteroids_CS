@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Drawing;
 using System.Media;
+using System.Collections.Generic;
 
 namespace CS_Part2_Lesson1
 {
@@ -19,6 +20,7 @@ namespace CS_Part2_Lesson1
         public static BaseObject[] stars;
         public static BaseObject[] fighters;
         static Missile missile;
+        private static List<Missile> missiles = new List<Missile>();
         static Ship ship;
         public static BaseObject[] powerUps;
 
@@ -128,38 +130,66 @@ namespace CS_Part2_Lesson1
                 asteroid.Update();
             foreach (BaseObject star in stars)
                 star.Update();
-            foreach (BaseObject powerUp in powerUps)
+
+            for (int i = 0; i < powerUps.Length; i++)
             {
-                powerUp.Update();
+                if (powerUps[i] == null)
+                    continue;
+
+                powerUps[i].Update();
                 var rnd = new Random();
-                if (powerUp.Collision(ship))
+                if (powerUps[i].Collision(ship))
                 {
                     ship.EnergyRise(rnd.Next(15, 30));
+                    ship.AstroDroidUsed(1);
+                    powerUps[i] = null;
+                    i--;
                     System.Media.SystemSounds.Asterisk.Play();
                 }
-                
-             
+
             }
 
-            missile?.Update();
-            for (var i = 0; i < fighters.Length; i++)
+
+            //foreach (BaseObject powerUp in powerUps)
+            //{
+            //    powerUp.Update();
+            //    var rnd = new Random();
+            //    if (powerUp.Collision(ship))
+            //    {
+            //        ship.EnergyRise(rnd.Next(15, 30));
+            //        System.Media.SystemSounds.Asterisk.Play();
+            //    }
+                
+             
+            //}
+
+            foreach (Missile m in missiles)
+            {
+                m.Update();
+            }
+
+            for (int i = 0; i < fighters.Length; i++)
             {
                 if (fighters[i] == null)
                     continue;
                 fighters[i].Update();
-                if (missile != null && missile.Collision(fighters[i]))
+
+                for (int j = 0; j < missiles.Count; j++)
                 {
-                    System.Media.SystemSounds.Hand.Play();
-                    fighters[i] = null;
-                    missile = null;
-                    ship.FightersCount(1);
-                    continue;
+                    if (fighters[i] != null && missiles[j].Collision(fighters[i]))
+                    {
+                        System.Media.SystemSounds.Hand.Play();
+                        fighters[i] = null;
+                        missiles.RemoveAt(j);
+                        j--;
+                        ship.FightersCount(1);
+                        continue;
+                    }
                 }
 
-                if (!ship.Collision(fighters[i]))
+
+                if (fighters[i] == null || !ship.Collision(fighters[i]))
                     continue;
-
-
 
                 var rnd = new Random();
                 ship.EnergyLow(rnd.Next(15, 30));
@@ -209,22 +239,32 @@ namespace CS_Part2_Lesson1
             {
                 obj?.Draw();
             }
-            missile?.Draw();
+            foreach (Missile m in missiles)
+            {
+                m.Draw();
+            }
+
             ship?.Draw();
             if (ship != null)
             {
                 Buffer.Graphics.DrawString("Energy: " + ship.Energy, 
-                    new Font(FontFamily.GenericSansSerif,20, FontStyle.Regular),
+                    new Font(FontFamily.GenericSansSerif,16, FontStyle.Regular),
                     Brushes.White,0,0);
 
                 Buffer.Graphics.DrawString("Figters Down: " + ship.FightersDown,
-                    new Font(FontFamily.GenericSansSerif, 20, FontStyle.Regular),
+                    new Font(FontFamily.GenericSansSerif, 16, FontStyle.Regular),
                  Brushes.White, 0, 30);
+
+                Buffer.Graphics.DrawString("R2D2 in action: " + ship.AstrDroidUsed,
+              new Font(FontFamily.GenericSansSerif, 16, FontStyle.Regular),
+           Brushes.White, 0, 60);
+
             }
             //Buffer.Graphics.DrawString("Mission Failed", new Font(FontFamily.GenericSansSerif, 60, FontStyle.Underline),
             //   Brushes.White, 200, 100);
             foreach (BaseObject obj in powerUps)
-                obj.Draw();
+                obj?.Draw();
+
 
 
             //foreach (BaseObject obj in fighters)
@@ -247,10 +287,12 @@ namespace CS_Part2_Lesson1
         }
 
 
+    
 
         private static void LoadObjMissle()
         {
             Random rand = new Random();
+
             //object parameters
             int posX = ship.Rect.X + 10;
             int posY = ship.Rect.Y + 4;
@@ -267,6 +309,8 @@ namespace CS_Part2_Lesson1
             //object game logic
             missile = new Missile(new Point(posX, posY),
                new Point(dirX, dirY), new Size(sizewWidth, sizeHeight));
+
+            
 
         }
 
@@ -408,7 +452,8 @@ namespace CS_Part2_Lesson1
         private static void Form_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.ControlKey)
-                LoadObjMissle();
+                missiles.Add(new Missile(new Point(ship.Rect.X + 10, 
+                    ship.Rect.Y + 4), new Point(45, 0), new Size(50, 2)));
             if (e.KeyCode == Keys.Up)
                 ship.Up();
             if (e.KeyCode == Keys.Down)
@@ -420,8 +465,7 @@ namespace CS_Part2_Lesson1
 
         }
 
-
-
+    
 
 
     }

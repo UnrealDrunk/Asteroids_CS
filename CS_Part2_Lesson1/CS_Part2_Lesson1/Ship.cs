@@ -15,6 +15,10 @@ namespace CS_Part2_Lesson1
         private int fightersDown;
         public int FightersDown => fightersDown;
 
+        private int astroDroid = 5;
+        public int AstrDroidUsed => astroDroid;
+
+
         public static Image Image { get; set; }
 
 
@@ -36,6 +40,12 @@ namespace CS_Part2_Lesson1
         public void FightersCount(int n)
         {
             fightersDown += n;
+        }
+
+
+        public void AstroDroidUsed(int n)
+        {
+            astroDroid--;
         }
 
         public Ship(Point pos, Point dir, Size size): base(pos,dir,size)
